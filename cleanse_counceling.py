@@ -19,7 +19,7 @@ def find_errors(row):
 data = pd.read_csv('counceling.csv')
 
 # Combine all files into a single DataFrame
-# combined_data = pd.concat([file1, file2, file3, file4], ignore_index=True)
+#  combined_data = pd.concat([file1, file2, file3, file4], ignore_index=True)
 combined_data = pd.concat([data], ignore_index=True)
 # Remove duplicates
 
