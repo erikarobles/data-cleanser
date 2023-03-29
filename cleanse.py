@@ -17,13 +17,15 @@ def find_errors(row):
         error = True
         error_columns.append('Department_Name')
     
-    # Check if DOE rows GREATER or equal to 1900
+    # Check if DOE rows are NOT greater or equal to 1900
     if row['DOE'] < 1900:
         error = True
         error_columns.append('DOE')
     
     # Check for missing values
-    
+    if pd.isna(row['Department_ID']) or pd.isna(row['Department_Name']) or pd.isna(row['DOE']):
+        error = True
+        error_columns.extend(['Department_ID', 'Department_Name', 'DOE'])
 
     return error, error_columns
 
