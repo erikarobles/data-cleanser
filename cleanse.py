@@ -1,4 +1,5 @@
 import pandas as pd
+from dateutil.parser import parse
 
 # Function to identify inconsistencies or errors in a row
 def find_errors(row):
@@ -18,7 +19,11 @@ def find_errors(row):
         error_columns.append('Department_Name')
     
     # Check if DOE rows are NOT greater or equal to 1900
-    
+    doe_year = int(row['DOE'][:4]) if isinstance(row['DOE'], str) else None
+    if doe_year is not None and doe_year < 1900:
+        error = True
+        error_columns.append('DOE')
+
     
     # Check for missing values
     if row.isnull().any():
