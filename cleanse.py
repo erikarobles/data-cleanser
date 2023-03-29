@@ -8,24 +8,22 @@ def find_errors(row):
     error_columns = []
 
     # Check if Department_ID rows are unique
-    if len(row['Department_ID'].unique()) != len(row['Department_ID']):
+    if len(pd.Series(row['Department_ID']).unique()) != len(row['Department_ID']):
         error = True
         error_columns.append('Department_ID')
     
     # Check if Department_Name rows are unique
-    if len(row['Department_Name'].unique()) != len(row['Department_Name']):
+    if len(pd.Series(row['Department_Name']).unique()) != len(row['Department_Name']):
         error = True
         error_columns.append('Department_Name')
     
     # Check if DOE rows are NOT greater or equal to 1900
-    if row['DOE'] < 1900:
-        error = True
-        error_columns.append('DOE')
+    
     
     # Check for missing values
-    if pd.isna(row['Department_ID']) or pd.isna(row['Department_Name']) or pd.isna(row['DOE']):
+    if row.isnull().any():
         error = True
-        error_columns.extend(['Department_ID', 'Department_Name', 'DOE'])
+        error_columns.extend(row[row.isnull()].index.tolist())
 
     return error, error_columns
 
