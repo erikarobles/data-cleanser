@@ -7,27 +7,32 @@ def find_errors(row):
     error = False
     error_columns = []
 
-    if row['Marks'] > 100 or row['Marks'] < 0:  # Replace 'column_name' and 'threshold' with your specific case
+    # Check if Department_ID rows are unique
+    if len(row['Department_ID'].unique()) != len(row['Department_ID']):
         error = True
-        error_columns.append('Marks')
-
-    # Add more error-checking conditions if necessary
-    if row['Effort_Hours'] < 0:
+        error_columns.append('Department_ID')
+    
+    # Check if Department_Name rows are unique
+    if len(row['Department_Name'].unique()) != len(row['Department_Name']):
         error = True
-        error_columns.append('Effort_Hours')
-
-    if row.isnull().any():
+        error_columns.append('Department_Name')
+    
+    # Check if DOE rows GREATER or equal to 1900
+    if row['DOE'] < 1900:
         error = True
-        error_columns.extend(row[row.isnull()].index.tolist())
+        error_columns.append('DOE')
+    
+    # Check for missing values
+    
 
     return error, error_columns
 
 # Read CSV files
-file4 = pd.read_csv('file (4).csv')
+data = pd.read_csv('department.csv')
 
 # Combine all files into a single DataFrame
 # combined_data = pd.concat([file1, file2, file3, file4], ignore_index=True)
-combined_data = pd.concat([file4], ignore_index=True)
+combined_data = pd.concat([data], ignore_index=True)
 # Remove duplicates
 
 
