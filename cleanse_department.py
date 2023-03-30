@@ -8,24 +8,32 @@ def find_errors(row):
     error = False
     error_columns = []
 
-    # Check if Department_ID rows are unique
-    if len(pd.Series(row['Department_ID']).unique()) != len(row['Department_ID']):
+    # # Check if Department_ID rows are unique
+    if combined_data['Department_ID'].duplicated().any():
         error = True
         error_columns.append('Department_ID')
     
-    # Check if Department_Name rows are unique
-    if len(pd.Series(row['Department_Name']).unique()) != len(row['Department_Name']):
+    # # Check if Department_Name rows are unique
+    if combined_data['Department_Name'].duplicated().any():
         error = True
         error_columns.append('Department_Name')
     
-    # Check if DOE rows are NOT greater or equal to 1900
-    doe_year = int(row['DOE'][:4]) if isinstance(row['DOE'], str) else None
-    if doe_year is not None and doe_year < 1900:
-        error = True
-        error_columns.append('DOE')
-
+    # if pd.Series(row['Department_Name']).str.lower().duplicated().any():
+    #     error = True
+    #     error_columns.append('Department_Name')
     
-    # Check for missing values
+    # Check if DOE rows are NOT greater or equal to 1900
+    doe = str(row['DOE'])
+    year_str = doe[:4]
+
+    if year_str != 'nan':
+        year = int(year_str)
+        if year < 1900:
+            error = True
+            error_columns.append('DOE')
+            print("The year is less than 1900.")
+    
+    # # Check for missing values
     if row.isnull().any():
         error = True
         error_columns.extend(row[row.isnull()].index.tolist())
@@ -60,4 +68,4 @@ for index, row in combined_data.iterrows():
         error_rows = error_rows.append(row_with_errors, ignore_index=True)
 
 # Save the rows with errors to a CSV file
-error_rows.to_csv('error_rows.csv', index=False)
+error_rows.to_csv('department_error_report.csv', index=False)

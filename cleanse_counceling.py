@@ -43,4 +43,4 @@ for index, row in combined_data.iterrows():
         error_rows = error_rows.append(row_with_errors, ignore_index=True)
 
 # Save the rows with errors to a CSV file
-error_rows.to_csv('error_rows.csv', index=False)
+error_rows.to_csv('counceling_error_report.csv', index=False)
