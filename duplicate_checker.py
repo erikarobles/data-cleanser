@@ -5,7 +5,7 @@ file_path = "department.csv"  # Replace with the path to your CSV file
 df = pd.read_csv(file_path)
 
 # Check for duplicate rows based on 'Student_ID' and 'Paper_ID'
-duplicates = df.duplicated(subset=['Department_Name'], keep=False)
+duplicates = df.duplicated(subset=['Department_ID'], keep=False)
 
 # Filter the DataFrame to include only the duplicated rows
 duplicated_rows = df[duplicates]

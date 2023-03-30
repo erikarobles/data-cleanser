@@ -7,20 +7,6 @@ def find_errors(row):
     # For example, check if a value is an outlier or if a string is incorrectly formatted
     error = False
     error_columns = []
-
-    # # Check if Department_ID rows are unique
-    if combined_data['Department_ID'].duplicated().any():
-        error = True
-        error_columns.append('Department_ID')
-    
-    # # Check if Department_Name rows are unique
-    if combined_data['Department_Name'].duplicated().any():
-        error = True
-        error_columns.append('Department_Name')
-    
-    # if pd.Series(row['Department_Name']).str.lower().duplicated().any():
-    #     error = True
-    #     error_columns.append('Department_Name')
     
     # Check if DOE rows are NOT greater or equal to 1900
     doe = str(row['DOE'])
